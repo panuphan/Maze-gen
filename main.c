@@ -6,15 +6,17 @@
 int main(int argc, char const *argv[])
 {
 	int map[ROW][COL][3]={0},show[ROW*2+1][COL*2+1]={0},way[4],hway;
-	int i,j,r=0,c=0,ra,w=0;
+	int i,j,r=0,c=0,ra,w=0,sr=1,sc=1;
 	//map for show
-	for(i=0;i<=COL*2;i++){
-		show[0][i]=1;
-		show[ROW*2][i]=1;
+	for(i=0;i<=COL*2;i+=2){
+		for(j=0;j<=COL*2;j++){
+			show[i][j]=1;
+		}
 	}
 	for(i=0;i<=ROW*2;i++){
-		show[i][0]=1;
-		show[i][COL*2]=1;
+		for(j=0;j<=COL*2;j+=2){
+			show[i][j]=1;
+		}
 	}
 	time_t t;
     srand((unsigned) time(&t));
@@ -46,6 +48,7 @@ int main(int argc, char const *argv[])
    		   			case 0:{
    		   				map[r][c][0]=85;
    		   				map[r][c][1]=1;
+   		   				show[r*2][c*2+1]=0;
    		   				r--;
    		   				map[r][c][1]=1;
    		   				break;
@@ -53,6 +56,7 @@ int main(int argc, char const *argv[])
    		   			case 1:{
    		   				map[r][c][0]=76;
    		   				map[r][c][1]=1;
+   		   				show[r*2+1][c*2]=0;
    		   				c--;
    		   				map[r][c][1]=1;
    		   				break;
@@ -60,6 +64,7 @@ int main(int argc, char const *argv[])
    		   			case 2:{
    		   				map[r][c][0]=82;
    		   				map[r][c][1]=1;
+   		   				show[r*2+1][c*2+2]=0;
    		   				c++;
    		   				map[r][c][1]=1;
    		   				break;
@@ -67,6 +72,7 @@ int main(int argc, char const *argv[])
    		   			case 3:{
    		   				map[r][c][0]=68;
    		   				map[r][c][1]=1;
+   		   				show[r*2+2][c*2+1]=0;
    		   				r++;
    		   				map[r][c][1]=1;
    		   				break;
@@ -110,12 +116,14 @@ int main(int argc, char const *argv[])
    		}
    		printf("\n");
    	}
-	/*printf("\n MAP \n");
+	printf("\n MAP \n");
 	for(i=0;i<=ROW*2;i++){
    		for(j=0;j<=COL*2;j++){
-   			printf("%d",show[i][j]);
+   			//printf("%d",show[i][j]);
+   			if (show[i][j]==1)printf("#");
+   			if (show[i][j]==0)printf(" ");
    		}
    		printf("\n");
-   	}*/
+   	}
 	return 0;
 }
